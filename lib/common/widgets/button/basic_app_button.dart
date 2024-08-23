@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/configs/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class BasicAppButton extends StatelessWidget {
@@ -20,6 +21,7 @@ class BasicAppButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.primary,
         minimumSize: Size(
           width ?? MediaQuery.of(context).size.width,
           height ?? 50

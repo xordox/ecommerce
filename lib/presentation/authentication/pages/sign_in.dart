@@ -1,18 +1,21 @@
 import 'package:ecommerce/common/helper/navigator/app_navigator.dart';
 import 'package:ecommerce/common/widgets/appbar/app_bar.dart';
 import 'package:ecommerce/common/widgets/button/basic_app_button.dart';
+import 'package:ecommerce/core/configs/theme/app_colors.dart';
+import 'package:ecommerce/data/auth/models/user_signin_req.dart';
 import 'package:ecommerce/presentation/authentication/pages/enter_password.dart';
 import 'package:ecommerce/presentation/authentication/pages/sign_up.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SignInPage extends StatelessWidget {
-  const SignInPage({super.key});
+   SignInPage({super.key});
+  final TextEditingController _emailCon = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
-      appBar: BasicAppbar(hideBack: true,),
+      appBar: const BasicAppbar(hideBack: true,),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 40),
         child: Column(
@@ -22,6 +25,7 @@ class SignInPage extends StatelessWidget {
             _emailField(context),
             const SizedBox(height: 20,),
             _continueButton(context),
+            const SizedBox(height: 20,),
             _createAccount(context)
           ],
         ),
@@ -38,8 +42,9 @@ class SignInPage extends StatelessWidget {
   }
 
   Widget _emailField(BuildContext context) {
-    return const TextField(
-      decoration: InputDecoration(
+    return  TextField(
+      controller: _emailCon,
+      decoration: const InputDecoration(
         hintText: "Enter email"
       ),
     );
@@ -47,7 +52,7 @@ class SignInPage extends StatelessWidget {
 
   Widget _continueButton(BuildContext context) {
     return BasicAppButton(onPressed: (){
-      AppNavigator.push(context, const EnterPasswordPage());
+      AppNavigator.push(context,  EnterPasswordPage(signinReq: UserSigninReq(email: _emailCon.text),));
     }, title: "Continue",);
   }
 
@@ -62,7 +67,6 @@ class SignInPage extends StatelessWidget {
           recognizer: TapGestureRecognizer()..onTap =(){
             AppNavigator.push(context, SignUpPage());
           },
-          style: const TextStyle(fontWeight: FontWeight.bold)
         )
       ]
     ));
