@@ -19,5 +19,12 @@ class ProductRepositoryImpl extends ProductRepository{
 
    return returnedData.fold((error) => Left(error), (data) => Right(List.from(data).map((e) => ProductModel.fromMap(e).toEntity()).toList()));
   }
+  
+  @override
+  Future<Either> getProductsByCategoryId(String categoryId) async{
+   var returnedData = await sl<ProductFirebaseService>().getProductsByCategoryId(categoryId);
+
+   return returnedData.fold((error) => Left(error), (data) => Right(List.from(data).map((e) => ProductModel.fromMap(e).toEntity()).toList()));
+  }
 
 }

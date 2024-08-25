@@ -1,9 +1,11 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 
 abstract class ProductFirebaseService {
   Future<Either> getTopSelling();
-  Future<Either> getNewIn();
+  Future<Either> getNewIn();Future<Either> getProductsByCategoryId(String categoryId);
 }
 
 class ProductFirebaseServiceImpl extends ProductFirebaseService{ 
@@ -27,6 +29,13 @@ return Right(returnedData.docs.map((e) => e.data()).toList());
     } catch(e) {
 return const Left("Error fetching new in products");
     }
+  }
+  
+  @override
+  Future<Either> getProductsByCategoryId(String categoryId) async{
+    log("catId: $categoryId");
+    var returnedData = await FirebaseFirestore.instance.collection("Products").where("categoryId",isEqualTo: categoryId).get();
+return Right(returnedData.docs.map((e) => e.data()).toList());
   }
 
 }
